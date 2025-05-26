@@ -26,25 +26,29 @@ func (t *Training) Parse(datastring string) error {
         return errors.New("неверный формат данных: должно быть 3 части")
     }
 
-    // Парсим количество шагов
     steps, err := strconv.Atoi(parts[0])
     if err != nil {
         return fmt.Errorf("ошибка при парсинге шагов: %w", err)
     }
+    if steps <= 0 {
+        return errors.New("количество шагов должно быть положительным")
+    }
     t.Steps = steps
 
-    // Сохраняем тип тренировки
     t.TrainingType = parts[1]
 
-    // Парсим длительность
     duration, err := time.ParseDuration(parts[2])
     if err != nil {
         return fmt.Errorf("ошибка при парсинге длительности: %w", err)
+    }
+    if duration <= 0 {
+        return errors.New("продолжительность должна быть положительной")
     }
     t.Duration = duration
 
     return nil
 }
+
 
 // ActionInfo формирует строку с информацией о тренировке
 func (t Training) ActionInfo() (string, error) {
@@ -75,7 +79,7 @@ func (t Training) ActionInfo() (string, error) {
     durationHours := t.Duration.Hours()
 
     info := fmt.Sprintf(
-        "Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f",
+        "Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
         t.TrainingType,
         durationHours,
         distance,

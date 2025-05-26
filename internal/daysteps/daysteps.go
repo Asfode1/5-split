@@ -28,16 +28,23 @@ func (ds *DaySteps) Parse(datastring string) error {
     if err != nil {
         return fmt.Errorf("ошибка при парсинге шагов: %w", err)
     }
+    if steps <= 0 {
+        return fmt.Errorf("количество шагов должно быть положительным")
+    }
     ds.Steps = steps
 
     duration, err := time.ParseDuration(parts[1])
     if err != nil {
         return fmt.Errorf("ошибка при парсинге длительности: %w", err)
     }
+    if duration <= 0 {
+        return fmt.Errorf("длительность должна быть положительной")
+    }
     ds.Duration = duration
 
     return nil
 }
+
 
 // ActionInfo формирует строку с информацией о прогулке
 func (ds DaySteps) ActionInfo() (string, error) {
@@ -50,7 +57,7 @@ func (ds DaySteps) ActionInfo() (string, error) {
     }
 
     info := fmt.Sprintf(
-        "Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.",
+        "Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n",
         ds.Steps,
         distance,
         calories,
