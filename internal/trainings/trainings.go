@@ -88,3 +88,4 @@ func (t Training) ActionInfo() (string, error) {
 
     return info, nil
 }
+
