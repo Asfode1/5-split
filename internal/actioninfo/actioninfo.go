@@ -29,7 +29,7 @@ func Info(dataset []string, dp DataParser) {
         
         // Выводим результат
         fmt.Println(info)
-		fmt.Println("--------------------------------------------------")
+		fmt.Println("--------------------------------------------------\n")
 
     }
 }
