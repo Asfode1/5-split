@@ -7,8 +7,8 @@ import (
     "strings"
     "time"
 
-    "github.com/Asfode1/YandexPracticum/personaldata"   // Импортируем пакет с Personal
-    "spentenergy"    // Импортируем пакет с расчетами
+    "github.com/Yandex-Practicum/tracker/internal/personaldata" // Импортируем пакет с Personal
+    "github.com/Yandex-Practicum/tracker/internal/spentenergy"  // Импортируем пакет с расчетами
 )
 
 // Training содержит данные о тренировке
@@ -20,7 +20,7 @@ type Training struct {
 }
 
 // Parse парсит строку формата "3456,Ходьба,3h00m" и записывает данные в структуру Training
-func (t *Training) Parse(datastring string) (err error) {
+func (t *Training) Parse(datastring string) error {
     parts := strings.Split(datastring, ",")
     if len(parts) != 3 {
         return errors.New("неверный формат данных: должно быть 3 части")

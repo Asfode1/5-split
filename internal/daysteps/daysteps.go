@@ -6,8 +6,8 @@ import (
     "strings"
     "time"
 
-    "personaldata" // импортируем пакет с Personal
-    "spentenergy"  // импортируем пакет с расчетами
+    "github.com/Yandex-Practicum/tracker/internal/personaldata" // импортируем пакет с Personal
+    "github.com/Yandex-Practicum/tracker/internal/spentenergy"  // импортируем пакет с расчетами
 )
 
 // DaySteps содержит данные о дневных прогулках
@@ -18,7 +18,7 @@ type DaySteps struct {
 }
 
 // Parse парсит строку формата "678,0h50m" и записывает данные в структуру DaySteps
-func (ds *DaySteps) Parse(datastring string) (err error) {
+func (ds *DaySteps) Parse(datastring string) error {
     parts := strings.Split(datastring, ",")
     if len(parts) != 2 {
         return fmt.Errorf("неверный формат данных: должно быть 2 части")
@@ -58,3 +58,4 @@ func (ds DaySteps) ActionInfo() (string, error) {
 
     return info, nil
 }
+

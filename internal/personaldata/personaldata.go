@@ -1,4 +1,4 @@
-package main
+package personaldata
 
 import "fmt"
 
