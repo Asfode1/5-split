@@ -19,30 +19,35 @@ type DaySteps struct {
 
 // Parse парсит строку формата "678,0h50m"
 func (ds *DaySteps) Parse(datastring string) error {
-	parts := strings.Split(datastring, ",")
-	if len(parts) != 2 {
-		return fmt.Errorf("неверный формат данных: должно быть 2 части")
-	}
-	steps, err := strconv.Atoi(strings.TrimSpace(parts[0]))
-	if err != nil {
-		return fmt.Errorf("ошибка при парсинге шагов: %w", err)
-	}
-	if steps <= 0 {
-		return fmt.Errorf("количество шагов должно быть положительным")
-	}
-	ds.Steps = steps
+    parts := strings.Split(datastring, ",")
+    if len(parts) != 2 {
+        return fmt.Errorf("неверный формат данных: должно быть 2 части")
+    }
+    stepsStr := parts[0]
+    if strings.TrimSpace(stepsStr) != stepsStr {
+        return fmt.Errorf("шаги не должны содержать пробелы в начале или конце")
+    }
+    steps, err := strconv.Atoi(stepsStr)
+    if err != nil {
+        return fmt.Errorf("ошибка при парсинге шагов: %w", err)
+    }
+    if steps <= 0 {
+        return fmt.Errorf("количество шагов должно быть положительным")
+    }
+    ds.Steps = steps
 
-	duration, err := time.ParseDuration(strings.TrimSpace(parts[1]))
-	if err != nil {
-		return fmt.Errorf("ошибка при парсинге длительности: %w", err)
-	}
-	if duration <= 0 {
-		return fmt.Errorf("длительность должна быть положительной")
-	}
-	ds.Duration = duration
+    duration, err := time.ParseDuration(strings.TrimSpace(parts[1]))
+    if err != nil {
+        return fmt.Errorf("ошибка при парсинге длительности: %w", err)
+    }
+    if duration <= 0 {
+        return fmt.Errorf("длительность должна быть положительной")
+    }
+    ds.Duration = duration
 
-	return nil
+    return nil
 }
+
 
 // ActionInfo формирует строку с информацией о прогулке
 func (ds DaySteps) ActionInfo() (string, error) {
