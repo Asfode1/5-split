@@ -52,14 +52,13 @@ func (t *Training) Parse(datastring string) error {
 
 // ActionInfo формирует строку с информацией о тренировке
 func (t Training) ActionInfo() (string, error) {
-    // Вычисляем дистанцию
     distance := spentenergy.Distance(t.Steps, t.Height)
-
-    // Вычисляем среднюю скорость
     meanSpeed := spentenergy.MeanSpeed(t.Steps, t.Height, t.Duration)
 
     var calories float64
-    switch strings.ToLower(t.TrainingType) {
+    trainingType := strings.ToLower(t.TrainingType)
+
+    switch trainingType {
     case "бег":
         c, err := spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
         if err != nil {
@@ -80,7 +79,7 @@ func (t Training) ActionInfo() (string, error) {
 
     info := fmt.Sprintf(
         "Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
-        t.TrainingType,
+        trainingType,
         durationHours,
         distance,
         meanSpeed,

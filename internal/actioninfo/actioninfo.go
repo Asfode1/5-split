@@ -14,21 +14,23 @@ type DataParser interface {
 // Info обрабатывает набор данных и выводит информацию о активностях
 func Info(dataset []string, dp DataParser) {
     for _, data := range dataset {
-        // Парсим данные
         if err := dp.Parse(data); err != nil {
             log.Printf("Ошибка парсинга данных: %v", err)
             continue
         }
-        
-        // Получаем информацию
+
         info, err := dp.ActionInfo()
         if err != nil {
             log.Printf("Ошибка получения информации: %v", err)
             continue
         }
-        
-        // Выводим результат
-        fmt.Println(info)
-		fmt.Println("--------------------------------------------------")
+
+        // Если info не заканчивается на \n, добавим его
+        if len(info) == 0 || info[len(info)-1] != '\n' {
+            info += "\n"
+        }
+
+        fmt.Print(info)
+        fmt.Printf("--------------------------------------------------")
     }
 }
