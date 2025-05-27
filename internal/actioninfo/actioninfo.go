@@ -33,7 +33,7 @@ func Info(dataset []string, dp DataParser) {
 		info = strings.TrimSpace(info)
 
 		// 3. Добавляем перевод строки и разделитель
-		fmt.Printf("%s\n--------------------------------------------------\n", info)
+		fmt.Printf("%s\n", info)
 	}
 }
 
